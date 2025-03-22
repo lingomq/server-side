@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8B853360-A658-4ED4-B557-C2254ADA74CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{88E86408-BE18-4170-A2BD-ED6AE70B72A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingomq.Domain", "src\Core\Lingomq.Domain\Lingomq.Domain.csproj", "{CCECBDCE-5439-4E85-BC6F-208E953E208D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingomq.Application", "src\Core\Lingomq.Application\Lingomq.Application.csproj", "{59D78B88-72C8-4218-95A3-7D01642AB51B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presenters", "Presenters", "{200959B9-EEE1-4521-9C93-B9FBA51F706A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingomq.WebApi", "src\Presenters\Lingomq.WebApi\Lingomq.WebApi.csproj", "{D7D178EE-8A1D-4B5D-A788-72843C6F57E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BEA1FD24-2DFC-4753-8B6D-DD0A475D15C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingomq.EmailSender", "src\Infrastructure\Lingomq.EmailSender\Lingomq.EmailSender.csproj", "{2DE9B773-2745-4FE0-8283-1A8558C5F6A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingomq.Persistense", "src\Infrastructure\Lingomq.Persistense\Lingomq.Persistense.csproj", "{E7D24B5A-61CA-4F52-AB42-DC5FC4072979}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCECBDCE-5439-4E85-BC6F-208E953E208D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCECBDCE-5439-4E85-BC6F-208E953E208D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCECBDCE-5439-4E85-BC6F-208E953E208D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCECBDCE-5439-4E85-BC6F-208E953E208D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D78B88-72C8-4218-95A3-7D01642AB51B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D78B88-72C8-4218-95A3-7D01642AB51B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D78B88-72C8-4218-95A3-7D01642AB51B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D78B88-72C8-4218-95A3-7D01642AB51B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D178EE-8A1D-4B5D-A788-72843C6F57E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D178EE-8A1D-4B5D-A788-72843C6F57E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D178EE-8A1D-4B5D-A788-72843C6F57E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D178EE-8A1D-4B5D-A788-72843C6F57E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE9B773-2745-4FE0-8283-1A8558C5F6A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE9B773-2745-4FE0-8283-1A8558C5F6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE9B773-2745-4FE0-8283-1A8558C5F6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE9B773-2745-4FE0-8283-1A8558C5F6A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7D24B5A-61CA-4F52-AB42-DC5FC4072979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7D24B5A-61CA-4F52-AB42-DC5FC4072979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7D24B5A-61CA-4F52-AB42-DC5FC4072979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7D24B5A-61CA-4F52-AB42-DC5FC4072979}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{88E86408-BE18-4170-A2BD-ED6AE70B72A2} = {8B853360-A658-4ED4-B557-C2254ADA74CD}
+		{CCECBDCE-5439-4E85-BC6F-208E953E208D} = {88E86408-BE18-4170-A2BD-ED6AE70B72A2}
+		{59D78B88-72C8-4218-95A3-7D01642AB51B} = {88E86408-BE18-4170-A2BD-ED6AE70B72A2}
+		{200959B9-EEE1-4521-9C93-B9FBA51F706A} = {8B853360-A658-4ED4-B557-C2254ADA74CD}
+		{D7D178EE-8A1D-4B5D-A788-72843C6F57E9} = {200959B9-EEE1-4521-9C93-B9FBA51F706A}
+		{BEA1FD24-2DFC-4753-8B6D-DD0A475D15C0} = {8B853360-A658-4ED4-B557-C2254ADA74CD}
+		{2DE9B773-2745-4FE0-8283-1A8558C5F6A7} = {BEA1FD24-2DFC-4753-8B6D-DD0A475D15C0}
+		{E7D24B5A-61CA-4F52-AB42-DC5FC4072979} = {BEA1FD24-2DFC-4753-8B6D-DD0A475D15C0}
+	EndGlobalSection
+EndGlobal
