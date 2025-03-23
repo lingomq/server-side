@@ -1,6 +1,14 @@
-using LingoMQ.Core.Application.Words;
-using LingoMQ.Core.Application.Words.Commands;
-using LingoMQ.Core.Application.Words.Queries;
+using System.Security.Claims;
+using LingoMQ.Core.Application.Features.Words;
+using LingoMQ.Core.Application.Features.Words.AddUserWord;
+using LingoMQ.Core.Application.Features.Words.AddWord;
+using LingoMQ.Core.Application.Features.Words.AddWordsFromFile;
+using LingoMQ.Core.Application.Features.Words.AddWordTranslation;
+using LingoMQ.Core.Application.Features.Words.ChangeWordThematics;
+using LingoMQ.Core.Application.Features.Words.GetUserWords;
+using LingoMQ.Core.Application.Features.Words.GetWords;
+using LingoMQ.Core.Application.Features.Words.RemoveUserWord;
+using LingoMQ.Core.Application.Features.Words.RemoveWords;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +18,12 @@ namespace LingoMQ.Presenters.WebApi.Controllers;
 [ApiController]
 public class WordsController : ControllerBase
 {
+    private Guid UserId =>
+        new Guid(
+            User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value
+                ?? Guid.NewGuid().ToString()
+        );
+
     private readonly IMediator _mediator;
 
     public WordsController(IMediator mediator)
@@ -48,6 +62,24 @@ public class WordsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("user")]
+    public async Task<IActionResult> GetUserWords(
+        Guid? userId,
+        CancellationToken cancellationToken = default,
+        int take = 20,
+        int skip = 0
+    )
+    {
+        if (userId is null)
+            userId = UserId;
+
+        var result = await _mediator.Send(
+            new GetUserWordsQuery((Guid)userId, take, skip),
+            cancellationToken
+        );
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post(
         AddWordsCommand addWordsCommand,
@@ -56,6 +88,16 @@ public class WordsController : ControllerBase
     {
         await _mediator.Send(addWordsCommand, cancellationToken);
         return Accepted();
+    }
+
+    [HttpPost("user")]
+    public async Task<IActionResult> AddUserWord(
+        AddUserWordRequest request,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await _mediator.Send(new AddUserWordCommand(request), cancellationToken);
+        return Accepted(result);
     }
 
     [HttpPost("from-file")]
@@ -114,5 +156,15 @@ public class WordsController : ControllerBase
     {
         await _mediator.Send(new RemoveWordsCommand(ids), cancellationToken);
         return Accepted();
+    }
+
+    [HttpDelete("user-word")]
+    public async Task<IActionResult> RemoveUserWord(
+        [FromQuery] Guid userWordId,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await _mediator.Send(new RemoveUserWordCommand(userWordId), cancellationToken);
+        return Accepted(result);
     }
 }

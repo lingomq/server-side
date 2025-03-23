@@ -2,7 +2,7 @@ using AutoMapper;
 using LingoMQ.Core.Domain.Words;
 using MediatR;
 
-namespace LingoMQ.Core.Application.Words.Queries;
+namespace LingoMQ.Core.Application.Features.Words.GetWords;
 
 public class GetWordsQuery : IRequest<IEnumerable<WordInfoDto>>
 {

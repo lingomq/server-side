@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace LingoMQ.Core.Application.Words.Validations;
+namespace LingoMQ.Core.Application.Features.Words.Validators;
 
 public class WordThematicsDtoValidator : AbstractValidator<WordThematicsDto>
 {

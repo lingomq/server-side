@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using LingoMQ.Core.Domain.Words;
 using Microsoft.EntityFrameworkCore;
 
-namespace LingoMQ.Infrastructure.Persistense.EntityFramework.Repositories;
+namespace LingoMQ.Infrastructure.Persistense.EntityFramework.Repositories.Words;
 
 public class WordInfoRepository : IWordInfoRepository
 {

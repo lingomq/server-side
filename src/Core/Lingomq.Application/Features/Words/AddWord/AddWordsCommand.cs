@@ -1,9 +1,8 @@
 using AutoMapper;
-using LingoMQ.Core.Application.Features.Words;
 using LingoMQ.Core.Domain.Words;
 using MediatR;
 
-namespace LingoMQ.Core.Application.Words.Commands;
+namespace LingoMQ.Core.Application.Features.Words.AddWord;
 
 public class AddWordsCommand : IRequest
 {

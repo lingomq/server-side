@@ -8,6 +8,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        builder.ToTable("users");
         builder.OwnsOne(x => x.Role).Property(x => x.Name).HasColumnName("role_name");
         builder.OwnsOne(x => x.Role).Property(x => x.Weight).HasColumnName("role_weight");
         builder.HasOne(x => x.Image).WithMany();
