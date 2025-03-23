@@ -1,4 +1,4 @@
-namespace LingoMQ.Core.Application.Words;
+namespace LingoMQ.Core.Application.Features.Words;
 
 public class WordThematicsDto
 {

@@ -1,10 +1,9 @@
 using AutoMapper;
-using LingoMQ.Core.Application.Features.Words;
 using LingoMQ.Core.Application.Services.Parser;
 using LingoMQ.Core.Domain.Words;
 using MediatR;
 
-namespace LingoMQ.Core.Application.Words.Commands;
+namespace LingoMQ.Core.Application.Features.Words.AddWordsFromFile;
 
 public class AddWordsFromFileCommand : IRequest
 {

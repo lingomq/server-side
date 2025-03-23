@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace LingoMQ.Core.Application.Words.Queries.QueriesValidators;
+namespace LingoMQ.Core.Application.Features.Words.GetWords;
 
 public class GetWordsQueryValidator : AbstractValidator<GetWordsQuery>
 {

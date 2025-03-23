@@ -1,4 +1,5 @@
 using LingoMQ.Presenters.WebApi;
+using LingoMQ.Presenters.WebApi.Middlewares;
 
 public class Program
 {
@@ -16,11 +17,7 @@ public class Program
         builder.Services.ConfigureApplication();
         builder.Services.AddUsersFeatures(builder.Configuration);
         builder.Services.AddWordsFeatures();
-        builder.Services.AddUsersEfContext(builder.Configuration);
-        builder.Services.AddWordsEfContext(builder.Configuration);
-        builder.Services.AddUsersPersistense();
-        builder.Services.AddWordsPersistense();
-        builder.Services.AddEfUnitOfWork();
+        builder.Services.AddPersistense(builder.Configuration);
 
         builder.Services.AddCors(options =>
         {
@@ -49,7 +46,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseCors(localAllowSpecificOrigins);
-        // app.UseMiddleware<ExceptionHandlerMiddleware>();
+        app.UseMiddleware<ExceptionHandlerMiddleware>();
         app.MapControllers();
 
         app.Run();

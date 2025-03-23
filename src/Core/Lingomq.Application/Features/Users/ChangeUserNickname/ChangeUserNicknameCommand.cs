@@ -1,4 +1,3 @@
-using LingoMQ.Core.Application.Common;
 using LingoMQ.Core.Domain.Users;
 using MediatR;
 

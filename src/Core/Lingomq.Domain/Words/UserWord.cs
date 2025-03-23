@@ -1,0 +1,19 @@
+using LingoMQ.Core.Domain.Common;
+using LingoMQ.Core.Domain.Users;
+
+namespace LingoMQ.Core.Domain.Words;
+
+public class UserWord : EntityBase<Guid>
+{
+    public virtual User User { get; private set; }
+    public virtual WordInfo Word { get; private set; }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    protected UserWord() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    public UserWord(User user, WordInfo wordInfo)
+    {
+        User = user;
+        Word = wordInfo;
+    }
+}
