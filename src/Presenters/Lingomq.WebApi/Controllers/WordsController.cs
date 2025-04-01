@@ -5,11 +5,15 @@ using LingoMQ.Core.Application.Features.Words.AddWord;
 using LingoMQ.Core.Application.Features.Words.AddWordsFromFile;
 using LingoMQ.Core.Application.Features.Words.AddWordTranslation;
 using LingoMQ.Core.Application.Features.Words.ChangeWordThematics;
+using LingoMQ.Core.Application.Features.Words.CheckTranslation;
+using LingoMQ.Core.Application.Features.Words.GetRandomUserWords;
 using LingoMQ.Core.Application.Features.Words.GetUserWords;
 using LingoMQ.Core.Application.Features.Words.GetWords;
 using LingoMQ.Core.Application.Features.Words.RemoveUserWord;
 using LingoMQ.Core.Application.Features.Words.RemoveWords;
+using LingoMQ.Presenters.WebApi.Constants;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LingoMQ.Presenters.WebApi.Controllers;
@@ -80,6 +84,20 @@ public class WordsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("random/{limit}")]
+    [Authorize(Roles = AuthorizationRoles.Everyone)]
+    public async Task<IActionResult> GetRandomUserWords(
+        int limit = 5,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var result = await _mediator.Send(
+            new GetRandomUserWordsQuery(UserId, limit),
+            cancellationToken
+        );
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post(
         AddWordsCommand addWordsCommand,
@@ -118,6 +136,16 @@ public class WordsController : ControllerBase
         await _mediator.Send(new AddWordsFromFileCommand(filePath), cancellationToken);
 
         return Accepted();
+    }
+
+    [HttpPost("translation-validator")]
+    public async Task<IActionResult> ValidateTranslation(
+        CheckTranslationRequest request,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var result = await _mediator.Send(new CheckTranslationCommand(request), cancellationToken);
+        return result ? Ok() : BadRequest();
     }
 
     [HttpPatch("translations/add/{wordId}")]
