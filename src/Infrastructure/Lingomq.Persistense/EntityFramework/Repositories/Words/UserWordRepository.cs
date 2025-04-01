@@ -62,15 +62,37 @@ public class UserWordRepository : IUserWordRepository
         return _mapper.Map<IEnumerable<UserWord>>(result);
     }
 
+    public async Task<IEnumerable<UserWord>> GetRandomUserWordsAsync(
+        Guid userId,
+        int limit,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var result = await _wordsDbContext
+            .UserWords
+            .Take(limit)
+            .Skip(0)
+            .Where(x => x.UserId == userId)
+            .ToListAsync(cancellationToken);
+
+        return _mapper.Map<IEnumerable<UserWord>>(result);
+    }
+
     public async Task RemoveAsync(UserWord entity, CancellationToken cancellationToken = default)
     {
-        var dao = await _wordsDbContext.UserWords.FirstAsync(x => x.Id == entity.Id, cancellationToken);
+        var dao = await _wordsDbContext.UserWords.FirstAsync(
+            x => x.Id == entity.Id,
+            cancellationToken
+        );
         await Task.Run(() => _wordsDbContext.UserWords.Remove(dao));
     }
 
     public async Task UpdateAsync(UserWord entity, CancellationToken cancellationToken = default)
     {
-        var dao = await _wordsDbContext.UserWords.FirstAsync(x => x.Id == entity.Id, cancellationToken);
+        var dao = await _wordsDbContext.UserWords.FirstAsync(
+            x => x.Id == entity.Id,
+            cancellationToken
+        );
         await Task.Run(() => _wordsDbContext.UserWords.Update(dao));
     }
 }
