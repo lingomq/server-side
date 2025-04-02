@@ -41,6 +41,9 @@ public class WordsController : ControllerBase
         string code,
         string subCode,
         CancellationToken cancellationToken,
+        string? languageTo,
+        string? codeTo,
+        string? subCodeTo,
         string thematics = "general",
         string searchedWord = "",
         int take = int.MaxValue,
@@ -58,6 +61,14 @@ public class WordsController : ControllerBase
                 Code = code,
                 SubCode = subCode,
             },
+            LanguageTo = languageTo is null
+                ? null
+                : new()
+                {
+                    Value = languageTo,
+                    Code = codeTo!,
+                    SubCode = subCodeTo!,
+                },
             SearchedWord = searchedWord,
         };
 
