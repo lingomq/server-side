@@ -10,6 +10,7 @@ public class GetWordsQuery : IRequest<IEnumerable<WordInfoDto>>
     public int Take { get; set; } = int.MaxValue;
     public WordThematicsDto? Thematics { get; set; }
     public required LanguageDto Language { get; set; }
+    public LanguageDto? LanguageTo { get; set; }
     public string SearchedWord { get; set; } = "";
 }
 
@@ -30,12 +31,14 @@ public class GetWordsQueryHandler : IRequestHandler<GetWordsQuery, IEnumerable<W
     )
     {
         var language = _mapper.Map<Language>(request.Language);
+        var languageTo = _mapper.Map<Language>(request.LanguageTo);
         var thematics = _mapper.Map<WordThematics>(request.Thematics);
         var entities = await _wordInfoRepository.GetAsync(
             new IsSpecifiedWordByFilterSpecification(
                 language,
                 thematics,
-                request.SearchedWord
+                request.SearchedWord,
+                languageTo
             ).ToExpression(),
             cancellationToken: cancellationToken,
             take: request.Take,
