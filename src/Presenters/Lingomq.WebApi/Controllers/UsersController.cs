@@ -1,9 +1,12 @@
 using System.Security.Claims;
 using LingoMQ.Core.Application.Features.Users;
+using LingoMQ.Core.Application.Features.Users.ChangeUserDescription;
+using LingoMQ.Core.Application.Features.Users.ChangeUserEmail;
 using LingoMQ.Core.Application.Features.Users.ChangeUserNickname;
 using LingoMQ.Core.Application.Features.Users.ChangeUserPassword;
 using LingoMQ.Core.Application.Features.Users.ChangeUserRole;
 using LingoMQ.Core.Application.Features.Users.GetUser;
+using LingoMQ.Core.Application.Features.Users.GetUserEmail;
 using LingoMQ.Core.Application.Features.Users.GetUserImage;
 using LingoMQ.Core.Application.Features.Users.UploadImage;
 using LingoMQ.Presenters.WebApi.Constants;
@@ -46,6 +49,17 @@ public class UserController(IMediator mediator) : ControllerBase
         return File(System.IO.File.ReadAllBytes(imagePath), "image/jpeg");
     }
 
+    [HttpGet("email")]
+    [Authorize(Roles = AuthorizationRoles.Everyone)]
+    public async Task<IActionResult> GetUserEmail(CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(
+            new GetUserEmailQuery() { Id = UserId },
+            cancellationToken
+        );
+        return Ok(result);
+    }
+
     [HttpPatch("image")]
     [Authorize(Roles = AuthorizationRoles.Everyone)]
     public async Task<IActionResult> UploadImage(
@@ -81,6 +95,34 @@ public class UserController(IMediator mediator) : ControllerBase
         return Accepted();
     }
 
+    [HttpPatch("description")]
+    [Authorize(Roles = AuthorizationRoles.Everyone)]
+    public async Task<IActionResult> ChangeDescription(
+        ChangeUserDescriptionModel request,
+        CancellationToken cancellationToken
+    )
+    {
+        await mediator.Send(
+            new ChangeUserDescriptionCommand() { Id = UserId, Description = request.Description },
+            cancellationToken
+        );
+        return Accepted();
+    }
+
+    [HttpPatch("email")]
+    [Authorize(Roles = AuthorizationRoles.Everyone)]
+    public async Task<IActionResult> ChangeEmail(
+        ChangeUserEmailModel request,
+        CancellationToken cancellationToken
+    )
+    {
+        await mediator.Send(
+            new ChangeUserEmailCommand() { Id = UserId, Email = request.Email },
+            cancellationToken
+        );
+        return Accepted();
+    }
+
     [HttpPatch("password")]
     [Authorize(Roles = AuthorizationRoles.Everyone)]
     public async Task<IActionResult> ChangePassword(
@@ -89,7 +131,12 @@ public class UserController(IMediator mediator) : ControllerBase
     )
     {
         await mediator.Send(
-            new ChangeUserPasswordCommand() { UserId = UserId, Password = model.Password },
+            new ChangeUserPasswordCommand()
+            {
+                UserId = UserId,
+                Password = model.Password,
+                OldPassword = model.OldPassword,
+            },
             cancellationToken
         );
         return Accepted();

@@ -53,6 +53,21 @@ public class UserCredentials : EntityBase<int>
         AuthorizationTypes.Add(type);
     }
 
+    public void ChangeAuthorizationTypeValue(
+        AuthorizationTypeEnum type,
+        string value,
+        string valueToChange
+    )
+    {
+        var authType =
+            AuthorizationTypes.FirstOrDefault(x =>
+                x.Type == type && x.Value == value
+            ) ?? throw new InvalidDataException("AuthorizationType is invalid");
+
+        AuthorizationTypes.Remove(authType);
+        AddAuthorizationType(AuthorizationType.AsEmail(valueToChange));
+    }
+
     public void RemoveAuthorizationType(AuthorizationType type) => AuthorizationTypes.Remove(type);
 
     public void ChangePassword(string password) => Crypt(password);

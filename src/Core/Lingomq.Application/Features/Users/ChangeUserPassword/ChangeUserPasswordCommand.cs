@@ -7,6 +7,7 @@ namespace LingoMQ.Core.Application.Features.Users.ChangeUserPassword;
 public class ChangeUserPasswordCommand : IRequest
 {
     public Guid UserId { get; set; }
+    public required string OldPassword { get; set; }
     public required string Password { get; set; }
 }
 
@@ -20,6 +21,15 @@ public class ChangeUserPasswordCommandHandler(
         User user =
             await userRepository.FindAsync(x => x.Id == request.UserId, cancellationToken)
             ?? throw new InvalidDataException("User wasn't found");
+
+        bool isEqualPassword = user.Credentials.CheckValidity(
+            user.Credentials.AuthorizationTypes.First(x => x.Type == AuthorizationTypeEnum.Email),
+            request.OldPassword
+        );
+
+        if (!isEqualPassword)
+            throw new InvalidDataException("Old password is not correct");
+            
         user.Credentials.ChangePassword(request.Password);
 
         await userRepository.UpdateAsync(user, cancellationToken);

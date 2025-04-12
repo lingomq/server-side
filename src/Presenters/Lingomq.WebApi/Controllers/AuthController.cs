@@ -1,3 +1,4 @@
+using LingoMQ.Core.Application.Features.Auth.RefreshJwtToken;
 using LingoMQ.Core.Application.Features.Auth.SignIn;
 using LingoMQ.Core.Application.Features.Users.CreateUser;
 using MediatR;
@@ -30,5 +31,15 @@ public class AuthController(IMediator mediator) : ControllerBase
     {
         await mediator.Send(command, cancellationToken);
         return Accepted();
+    }
+
+    [HttpPost("refresh")]
+    public async Task<IActionResult> RefreshJwtToken(
+        RefreshJwtTokenRequest request,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.Send(new RefreshJwtTokenCommand(request), cancellationToken);
+        return Ok(result);
     }
 }
