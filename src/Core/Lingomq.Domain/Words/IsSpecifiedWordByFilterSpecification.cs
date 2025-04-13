@@ -40,5 +40,5 @@ public class IsSpecifiedWordByFilterSpecification : Specification<WordInfo>
                         : true
                 )
                 && x.Word.Contains(_searchedValue)
-            ) && (x.Thematics.Category == _thematics.Category);
+            ) && (x.Thematics.Category.Contains(_thematics.Category == "general" ? "" : _thematics.Category));
 }

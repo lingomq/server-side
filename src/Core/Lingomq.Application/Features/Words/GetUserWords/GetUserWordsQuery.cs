@@ -9,12 +9,38 @@ public class GetUserWordsQuery : IRequest<IEnumerable<UserWordDto>>
     public Guid UserId { get; set; }
     public int Take { get; set; }
     public int Skip { get; set; }
+    public LanguageDto Language { get; set; }
+    public string Thematics { get; set; } = "general";
+    public string SearchedWord { get; set; } = "";
 
     public GetUserWordsQuery(Guid userId, int take, int skip)
     {
         UserId = userId;
         Take = take;
         Skip = skip;
+        Language = new()
+        {
+            Value = "english",
+            Code = "en",
+            SubCode = "US",
+        };
+    }
+
+    public GetUserWordsQuery(
+        Guid userId,
+        int take,
+        int skip,
+        LanguageDto language,
+        string thematics,
+        string searchedWord
+    )
+    {
+        UserId = userId;
+        Take = take;
+        Skip = skip;
+        Language = language;
+        Thematics = thematics;
+        SearchedWord = searchedWord;
     }
 }
 
@@ -35,7 +61,19 @@ public class GetUserWordsQueryHandler : IRequestHandler<GetUserWordsQuery, IEnum
     )
     {
         var userWords = await _userWordRepository.GetAsync(
-            x => x.User.Id == request.UserId,
+            x =>
+                x.User.Id == request.UserId
+                && (
+                    x.Word.Language.Value == request.Language.Value
+                    && x.Word.Language.Code == request.Language.Code
+                    && x.Word.Language.SubCode == request.Language.SubCode
+                    && x.Word.Word.Contains(request.SearchedWord)
+                )
+                && (
+                    x.Word.Thematics.Category.Contains(
+                        request.Thematics == "general" ? "" : request.Thematics
+                    )
+                ),
             request.Take,
             request.Skip,
             cancellationToken
