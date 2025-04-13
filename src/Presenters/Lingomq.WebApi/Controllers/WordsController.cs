@@ -82,14 +82,31 @@ public class WordsController : ControllerBase
         Guid? userId,
         CancellationToken cancellationToken = default,
         int take = 20,
-        int skip = 0
+        int skip = 0,
+        string language = "english",
+        string code = "en",
+        string subCode = "US",
+        string searchedWord = "",
+        string thematics = "general"
     )
     {
         if (userId is null)
             userId = UserId;
 
         var result = await _mediator.Send(
-            new GetUserWordsQuery((Guid)userId, take, skip),
+            new GetUserWordsQuery(
+                (Guid)userId,
+                take,
+                skip,
+                new()
+                {
+                    Value = language,
+                    Code = code,
+                    SubCode = subCode,
+                },
+                thematics,
+                searchedWord
+            ),
             cancellationToken
         );
         return Ok(result);
