@@ -10,6 +10,7 @@ using LingoMQ.Core.Application.Features.Words.GetRandomUserWords;
 using LingoMQ.Core.Application.Features.Words.GetUserWords;
 using LingoMQ.Core.Application.Features.Words.GetWords;
 using LingoMQ.Core.Application.Features.Words.RemoveUserWord;
+using LingoMQ.Core.Application.Features.Words.RemoveUserWordByWord;
 using LingoMQ.Core.Application.Features.Words.RemoveWords;
 using LingoMQ.Presenters.WebApi.Constants;
 using MediatR;
@@ -222,5 +223,15 @@ public class WordsController : ControllerBase
     {
         var result = await _mediator.Send(new RemoveUserWordCommand(userWordId), cancellationToken);
         return Accepted(result);
+    }
+
+    [HttpDelete("user/{wordId}")]
+    public async Task<IActionResult> RemoveUserWordByWord(
+        Guid wordId,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await _mediator.Send(new RemoveUserWordByWordCommand(wordId, UserId), cancellationToken);
+        return Accepted();
     }
 }
