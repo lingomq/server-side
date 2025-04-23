@@ -143,6 +143,7 @@ public class WordsController : ControllerBase
         CancellationToken cancellationToken
     )
     {
+        request.UserId = UserId;
         var result = await _mediator.Send(new AddUserWordCommand(request), cancellationToken);
         return Accepted(result);
     }
